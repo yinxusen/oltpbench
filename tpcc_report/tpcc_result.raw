@@ -1,1 +1,0 @@
-transaction type (index in config file), start time (microseconds),latency (microseconds),worker id(start number), phase id(index in config file)
