@@ -1,0 +1,9 @@
+1460252231
+mysql
+5.6.27
+tpcc
+[min=-1.0E-6, 25th=-1.0E-6, median=-1.0E-6, avg=0.0, 75th=-1.0E-6, 90th=-1.0E-6, 95th=-1.0E-6, 99th=-1.0E-6, max=-1.0E-6]
+0.0
+isolation=TRANSACTION_SERIALIZABLE
+scalefactor=2
+terminals=2

@@ -684,7 +684,8 @@ public class DBWorkload {
         LOG.debug(String.format("Creating %s Database", bench));
         bench.createDatabase();
     }
-    
+
+    // xusen, randomly generate database here.
     private static void runLoader(BenchmarkModule bench, boolean verbose) {
         LOG.debug(String.format("Loading %s Database", bench));
         bench.loadDatabase();
@@ -702,6 +703,7 @@ public class DBWorkload {
             workConfs.add(bench.getWorkloadConfiguration());
             
         }
+        // xusen, run TPCC benchmark here.
         Results r = ThreadBench.runRateLimitedBenchmark(workers, workConfs, intervalMonitor);
         LOG.info(SINGLE_LINE);
         LOG.info("Rate limited reqs/s: " + r);
