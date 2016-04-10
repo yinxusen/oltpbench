@@ -2,7 +2,7 @@
 
 ## Build
 
-Use `ant`
+Use `ant` or `ant -v` if you want to see verbose output.
 
 ## Run
 
@@ -10,7 +10,8 @@ Use `./oltpbenchmark` with arguments, or just type `./runTPCC.sh`
 
 An example of `./runTPCC.sh`:
 
-`java -Xmx1024m -cp `run/classpath.sh` -Dlog4j.configuration=log4j.properties\ 
+```bash
+java -Xmx1024m -cp `run/classpath.sh` -Dlog4j.configuration=log4j.properties\ 
 com.oltpbenchmark.DBWorkload\
 -b tpcc\
 -s 1\
@@ -20,7 +21,8 @@ com.oltpbenchmark.DBWorkload\
 --clear true\
 --create true\
 --load true\
---execute true`
+--execute true
+```
 
 According to the source code in `oltpbench/src/com/oltpbenchmark/DBWorkload.java`:
 
