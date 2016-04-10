@@ -1,5 +1,53 @@
 # OLTPBench
 
+## Build
+
+Use `ant`
+
+## Run
+
+Use `./oltpbenchmark` with arguments, or just type `./runTPCC.sh`
+
+An example of `./runTPCC.sh`:
+
+`java -Xmx1024m -cp `run/classpath.sh` -Dlog4j.configuration=log4j.properties\ 
+com.oltpbenchmark.DBWorkload\
+-b tpcc\
+-s 1\
+-c config/sample_tpcc_config.xml\
+-o tpcc_result\
+-d tpcc_report\
+--clear true\
+--create true\
+--load true\
+--execute true`
+
+According to the source code in `oltpbench/src/com/oltpbenchmark/DBWorkload.java`:
+
+* `--clear`: Clear all existing tables;
+
+* `--create`: Create database which is defined in the tpcc_config.xml;
+
+* `--load`: Load/Generate random data into your database;
+
+* `--execute`: Execute TPCC procedures to benchmark your database.
+
+Find Loader procedure in: `oltpbench/src/com/oltpbenchmark/benchmarks/tpcc/TPCCLoader.java`.
+
+Find TPCC procedures in:
+
+* `oltpbench/src/com/oltpbenchmark/benchmarks/tpcc/procedures/Delivery.java`
+
+* `oltpbench/src/com/oltpbenchmark/benchmarks/tpcc/procedures/NewOrder.java`
+
+* `oltpbench/src/com/oltpbenchmark/benchmarks/tpcc/procedures/OrderStatus.java`
+
+* `oltpbench/src/com/oltpbenchmark/benchmarks/tpcc/procedures/Payment.java`
+
+* `oltpbench/src/com/oltpbenchmark/benchmarks/tpcc/procedures/StockLevel.java`
+
+## Other README
+
 [![Build Status](https://travis-ci.org/oltpbenchmark/oltpbench.png)](https://travis-ci.org/oltpbenchmark/oltpbench)
 
 Benchmarking is incredibly useful, yet endlessly painful. This benchmark suite is the result of a group of
