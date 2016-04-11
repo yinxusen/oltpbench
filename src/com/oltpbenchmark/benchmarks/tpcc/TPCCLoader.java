@@ -994,6 +994,7 @@ public class TPCCLoader extends Loader{
 							order_line.ol_d_id = d;
 							order_line.ol_o_id = c;
 							order_line.ol_number = l; // ol_number
+							// Xusen, maybe an error here. ol_i_id references stock.s_i_id
 							order_line.ol_i_id = TPCCUtil.randomNumber(1,
 									100000, gen);
 							if (order_line.ol_o_id < FIRST_UNPROCESSED_O_ID) {
