@@ -1,3 +1,70 @@
+16:21:15,995 (DBWorkload.java:242) INFO  - **********************************************************************************
+
+Benchmark:     TPCC {com.oltpbenchmark.benchmarks.tpcc.TPCCBenchmark}
+Configuration: config/sample_tpcc_config.xml
+Type:          MYSQL
+Driver:        com.mysql.jdbc.Driver
+URL:           jdbc:mysql://localhost:3306/tpcc_oltpbench
+Isolation:     TRANSACTION_SERIALIZABLE
+Scale Factor:  2.0
+
+16:21:15,996 (DBWorkload.java:243) INFO  - **********************************************************************************
+16:21:16,005 (DBWorkload.java:495) INFO  - Creating new TPCC database...
+16:21:16,498 (DBWorkload.java:497) INFO  - Finished!
+16:21:16,499 (DBWorkload.java:498) INFO  - **********************************************************************************
+16:21:16,499 (DBWorkload.java:508) INFO  - Resetting TPCC database...
+16:21:16,516 (DBWorkload.java:510) INFO  - Finished!
+16:21:16,516 (DBWorkload.java:511) INFO  - **********************************************************************************
+16:21:16,516 (DBWorkload.java:521) INFO  - Loading data into TPCC database...
+16:22:41,208 (DBWorkload.java:523) INFO  - Finished!
+16:22:41,208 (DBWorkload.java:524) INFO  - **********************************************************************************
+16:22:41,208 (DBWorkload.java:697) INFO  - Creating 2 virtual terminals...
+16:22:41,211 (TPCCBenchmark.java:106) INFO  - w_id 1 = 1 terminals [lower=0 / upper1]
+16:22:41,224 (TPCCBenchmark.java:106) INFO  - w_id 2 = 1 terminals [lower=1 / upper2]
+16:22:41,229 (DBWorkload.java:700) INFO  - Launching the tpcc Benchmark with 1 Phases...
+16:22:41,236 (ThreadBench.java:319) INFO  - [Starting Phase] [Workload= tpcc] [Serial= false] [Time= 60] [Rate= 10000] [Arrival= REGULAR] [Ratios= [45.0, 43.0, 4.0, 4.0, 4.0]] [Active Workers=2]
+16:22:41,237 (ThreadBench.java:466) INFO  - [Measure] Warmup complete, starting measurements.
+16:23:41,235 (ThreadBench.java:422) INFO  - [Terminate] Waiting for all terminals to finish ..
+16:23:41,238 (ThreadBench.java:232) INFO  - Starting WatchDogThread
+16:23:41,269 (DBWorkload.java:706) INFO  - **********************************************************************************
+16:23:41,269 (DBWorkload.java:707) INFO  - Rate limited reqs/s: Results(nanoSeconds=60000076934, measuredRequests=34884) = 581.3992545104959 requests/sec
+16:23:41,283 (DBWorkload.java:572) INFO  - Output into file: tpcc_report/tpcc_result.res
+16:23:41,283 (DBWorkload.java:576) INFO  - Output Raw data into file: tpcc_report/tpcc_result.raw
+Our result uploadercom.oltpbenchmark.util.ResultUploader@7b227d8d
+16:23:41,283 (DBWorkload.java:581) INFO  - Output summary data into file: tpcc_report/tpcc_result.summary
+16:23:41,284 (DBWorkload.java:587) INFO  - Output db config into file: tpcc_report/tpcc_result.db.cnf
+16:23:41,285 (DBWorkload.java:593) INFO  - Output benchmark config into file: tpcc_report/tpcc_result.ben.cnf
+16:23:41,336 (DBWorkload.java:602) INFO  - Grouped into Buckets of 1 seconds
+16:23:41,361 (DBWorkload.java:630) INFO  - **********************************************************************************
+16:23:41,362 (DBWorkload.java:631) INFO  - Completed Transactions:
+NewOrder/02          [15672] ********************************************************************************
+Payment/03           [14916] ****************************************************************************
+OrderStatus/04       [ 1462] *******
+Delivery/05          [ 1448] *******
+StockLevel/06        [ 1388] *******
+
+16:23:41,362 (DBWorkload.java:632) INFO  - Aborted Transactions:
+NewOrder/02          [   0]
+Payment/03           [   0]
+OrderStatus/04       [   0]
+Delivery/05          [   0]
+StockLevel/06        [   0]
+
+16:23:41,362 (DBWorkload.java:633) INFO  - Rejected Transactions:
+NewOrder/02          [ 163] ********************************************************************************
+Payment/03           [   0]
+OrderStatus/04       [   0]
+Delivery/05          [   0]
+StockLevel/06        [   0]
+16:23:41,363 (DBWorkload.java:634) INFO  - Unexpected Errors:
+NewOrder/02          [   0]
+Payment/03           [   0]
+OrderStatus/04       [   0]
+Delivery/05          [   0]
+StockLevel/06        [   0]
+
+=================================================================================================
+
 22:31:10,150 (DBWorkload.java:242) INFO  - **********************************************************************************
 
 Benchmark:     TPCC {com.oltpbenchmark.benchmarks.tpcc.TPCCBenchmark}
