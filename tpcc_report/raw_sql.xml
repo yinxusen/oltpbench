@@ -1,0 +1,60 @@
+panda@pandadeMacBook-Pro oltpbench master$ ./oltpbenchmark --dialects-export true -b tpcc -c config/sample_tpcc_config.xml
+13:20:36,029 (DBWorkload.java:242) INFO  - **********************************************************************************
+
+Benchmark:     TPCC {com.oltpbenchmark.benchmarks.tpcc.TPCCBenchmark}
+Configuration: config/sample_tpcc_config.xml
+Type:          MYSQL
+Driver:        com.mysql.jdbc.Driver
+URL:           jdbc:mysql://localhost:3306/tpcc_oltpbench
+Isolation:     TRANSACTION_SERIALIZABLE
+Scale Factor:  2.0
+
+13:20:36,030 (DBWorkload.java:243) INFO  - **********************************************************************************
+13:20:36,039 (DBWorkload.java:479) INFO  - Exporting StatementDialects for TPCC
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<dialects>
+    <dialect type="MYSQL">
+        <procedure name="Delivery">
+            <statement name="delivGetCustIdSQL">SELECT O_C_ID FROM OORDER WHERE O_ID = ? AND O_D_ID = ? AND O_W_ID = ?</statement>
+            <statement name="delivUpdateDeliveryDateSQL">UPDATE ORDER_LINE SET OL_DELIVERY_D = ? WHERE OL_O_ID = ? AND OL_D_ID = ? AND OL_W_ID = ?</statement>
+            <statement name="delivUpdateCustBalDelivCntSQL">UPDATE CUSTOMER SET C_BALANCE = C_BALANCE + ?, C_DELIVERY_CNT = C_DELIVERY_CNT + 1 WHERE C_W_ID = ? AND C_D_ID = ? AND C_ID = ?</statement>
+            <statement name="delivUpdateCarrierIdSQL">UPDATE OORDER SET O_CARRIER_ID = ? WHERE O_ID = ? AND O_D_ID = ? AND O_W_ID = ?</statement>
+            <statement name="delivSumOrderAmountSQL">SELECT SUM(OL_AMOUNT) AS OL_TOTAL FROM ORDER_LINE WHERE OL_O_ID = ? AND OL_D_ID = ? AND OL_W_ID = ?</statement>
+            <statement name="delivGetOrderIdSQL">SELECT NO_O_ID FROM NEW_ORDER WHERE NO_D_ID = ? AND NO_W_ID = ? ORDER BY NO_O_ID ASC LIMIT 1</statement>
+            <statement name="delivDeleteNewOrderSQL">DELETE FROM NEW_ORDER WHERE NO_O_ID = ? AND NO_D_ID = ? AND NO_W_ID = ?</statement>
+        </procedure>
+        <procedure name="NewOrder">
+            <statement name="stmtGetDistSQL">SELECT D_NEXT_O_ID, D_TAX FROM DISTRICT WHERE D_W_ID = ? AND D_ID = ? FOR UPDATE</statement>
+            <statement name="stmtInsertNewOrderSQL">INSERT INTO NEW_ORDER (NO_O_ID, NO_D_ID, NO_W_ID) VALUES ( ?, ?, ?)</statement>
+            <statement name="stmtGetStockSQL">SELECT S_QUANTITY, S_DATA, S_DIST_01, S_DIST_02, S_DIST_03, S_DIST_04, S_DIST_05,        S_DIST_06, S_DIST_07, S_DIST_08, S_DIST_09, S_DIST_10 FROM STOCK WHERE S_I_ID = ? AND S_W_ID = ? FOR UPDATE</statement>
+            <statement name="stmtInsertOOrderSQL">INSERT INTO OORDER (O_ID, O_D_ID, O_W_ID, O_C_ID, O_ENTRY_D, O_OL_CNT, O_ALL_LOCAL) VALUES (?, ?, ?, ?, ?, ?, ?)</statement>
+            <statement name="stmtUpdateDistSQL">UPDATE DISTRICT SET D_NEXT_O_ID = D_NEXT_O_ID + 1 WHERE D_W_ID = ? AND D_ID = ?</statement>
+            <statement name="stmtGetItemSQL">SELECT I_PRICE, I_NAME , I_DATA FROM ITEM WHERE I_ID = ?</statement>
+            <statement name="stmtGetCustWhseSQL">SELECT C_DISCOUNT, C_LAST, C_CREDIT, W_TAX  FROM CUSTOMER, WAREHOUSE WHERE W_ID = ? AND C_W_ID = ? AND C_D_ID = ? AND C_ID = ?</statement>
+            <statement name="stmtInsertOrderLineSQL">INSERT INTO ORDER_LINE (OL_O_ID, OL_D_ID, OL_W_ID, OL_NUMBER, OL_I_ID, OL_SUPPLY_W_ID,  OL_QUANTITY, OL_AMOUNT, OL_DIST_INFO) VALUES (?,?,?,?,?,?,?,?,?)</statement>
+            <statement name="stmtUpdateStockSQL">UPDATE STOCK SET S_QUANTITY = ? , S_YTD = S_YTD + ?, S_ORDER_CNT = S_ORDER_CNT + 1, S_REMOTE_CNT = S_REMOTE_CNT + ?  WHERE S_I_ID = ? AND S_W_ID = ?</statement>
+        </procedure>
+        <procedure name="OrderStatus">
+            <statement name="ordStatGetNewestOrdSQL">SELECT O_ID, O_CARRIER_ID, O_ENTRY_D FROM OORDER WHERE O_W_ID = ? AND O_D_ID = ? AND O_C_ID = ? ORDER BY O_ID DESC LIMIT 1</statement>
+            <statement name="customerByNameSQL">SELECT C_FIRST, C_MIDDLE, C_ID, C_STREET_1, C_STREET_2, C_CITY, C_STATE, C_ZIP, C_PHONE, C_CREDIT, C_CREDIT_LIM, C_DISCOUNT, C_BALANCE, C_YTD_PAYMENT, C_PAYMENT_CNT, C_SINCE FROM CUSTOMER WHERE C_W_ID = ? AND C_D_ID = ? AND C_LAST = ? ORDER BY C_FIRST</statement>
+            <statement name="ordStatGetOrderLinesSQL">SELECT OL_I_ID, OL_SUPPLY_W_ID, OL_QUANTITY, OL_AMOUNT, OL_DELIVERY_D FROM ORDER_LINE WHERE OL_O_ID = ? AND OL_D_ID =? AND OL_W_ID = ?</statement>
+            <statement name="payGetCustSQL">SELECT C_FIRST, C_MIDDLE, C_LAST, C_STREET_1, C_STREET_2, C_CITY, C_STATE, C_ZIP, C_PHONE, C_CREDIT, C_CREDIT_LIM, C_DISCOUNT, C_BALANCE, C_YTD_PAYMENT, C_PAYMENT_CNT, C_SINCE FROM CUSTOMER WHERE C_W_ID = ? AND C_D_ID = ? AND C_ID = ?</statement>
+        </procedure>
+        <procedure name="Payment">
+            <statement name="payGetCustCdataSQL">SELECT C_DATA FROM CUSTOMER WHERE C_W_ID = ? AND C_D_ID = ? AND C_ID = ?</statement>
+            <statement name="payInsertHistSQL">INSERT INTO HISTORY (H_C_D_ID, H_C_W_ID, H_C_ID, H_D_ID, H_W_ID, H_DATE, H_AMOUNT, H_DATA)  VALUES (?,?,?,?,?,?,?,?)</statement>
+            <statement name="payUpdateWhseSQL">UPDATE WAREHOUSE SET W_YTD = W_YTD + ?  WHERE W_ID = ? </statement>
+            <statement name="payUpdateDistSQL">UPDATE DISTRICT SET D_YTD = D_YTD + ? WHERE D_W_ID = ? AND D_ID = ?</statement>
+            <statement name="customerByNameSQL">SELECT C_FIRST, C_MIDDLE, C_ID, C_STREET_1, C_STREET_2, C_CITY, C_STATE, C_ZIP, C_PHONE, C_CREDIT, C_CREDIT_LIM, C_DISCOUNT, C_BALANCE, C_YTD_PAYMENT, C_PAYMENT_CNT, C_SINCE FROM CUSTOMER WHERE C_W_ID = ? AND C_D_ID = ? AND C_LAST = ? ORDER BY C_FIRST</statement>
+            <statement name="payGetWhseSQL">SELECT W_STREET_1, W_STREET_2, W_CITY, W_STATE, W_ZIP, W_NAME FROM WAREHOUSE WHERE W_ID = ?</statement>
+            <statement name="payGetCustSQL">SELECT C_FIRST, C_MIDDLE, C_LAST, C_STREET_1, C_STREET_2, C_CITY, C_STATE, C_ZIP, C_PHONE, C_CREDIT, C_CREDIT_LIM, C_DISCOUNT, C_BALANCE, C_YTD_PAYMENT, C_PAYMENT_CNT, C_SINCE FROM CUSTOMER WHERE C_W_ID = ? AND C_D_ID = ? AND C_ID = ?</statement>
+            <statement name="payUpdateCustBalSQL">UPDATE CUSTOMER SET C_BALANCE = ?, C_YTD_PAYMENT = ?, C_PAYMENT_CNT = ? WHERE C_W_ID = ? AND C_D_ID = ? AND C_ID = ?</statement>
+            <statement name="payGetDistSQL">SELECT D_STREET_1, D_STREET_2, D_CITY, D_STATE, D_ZIP, D_NAME FROM DISTRICT WHERE D_W_ID = ? AND D_ID = ?</statement>
+            <statement name="payUpdateCustBalCdataSQL">UPDATE CUSTOMER SET C_BALANCE = ?, C_YTD_PAYMENT = ?, C_PAYMENT_CNT = ?, C_DATA = ? WHERE C_W_ID = ? AND C_D_ID = ? AND C_ID = ?</statement>
+        </procedure>
+        <procedure name="StockLevel">
+            <statement name="stockGetCountStockSQL">SELECT COUNT(DISTINCT (S_I_ID)) AS STOCK_COUNT FROM ORDER_LINE, STOCK WHERE OL_W_ID = ? AND OL_D_ID = ? AND OL_O_ID &lt; ? AND OL_O_ID &gt;= ? - 20 AND S_W_ID = ? AND S_I_ID = OL_I_ID AND S_QUANTITY &lt; ?</statement>
+            <statement name="stockGetDistOrderIdSQL">SELECT D_NEXT_O_ID FROM DISTRICT WHERE D_W_ID = ? AND D_ID = ?</statement>
+        </procedure>
+    </dialect>
+</dialects>
